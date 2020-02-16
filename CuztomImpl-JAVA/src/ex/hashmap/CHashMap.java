@@ -10,12 +10,10 @@ public class CHashMap<K, V> implements CMap<K, V> {
 
 		K key;
 		V value;
-		int hashVal;
 
 		Node(K key, V value, int hashVal) {
 			this.key = key;
 			this.value = value;
-			this.hashVal = hashVal;
 		}
 
 	}
@@ -135,7 +133,7 @@ public class CHashMap<K, V> implements CMap<K, V> {
 		}
 		node[hashVal] = new ArrayList<Node<K, V>>(Arrays.asList(new Node<>(key, value, hashVal)));
 		capacity++;
-		
+
 		return existingKey;
 
 	}
