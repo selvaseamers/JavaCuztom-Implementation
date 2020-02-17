@@ -76,11 +76,9 @@ public class CHashMap<K, V> implements CMap<K, V> {
 					.filter((nd) -> nd.key.equals(key)).findFirst().orElse(null);
 
 			node[hashVal].add(new Node<>(key, value, hashVal));
-			capacity++;
 
 			if (null != existingNode) {
 				node[hashVal].remove(existingNode);
-				capacity--;
 			}
 
 		} else {
@@ -89,7 +87,7 @@ public class CHashMap<K, V> implements CMap<K, V> {
 		}
 
 		System.out.println("Index :: " + hashVal + ", Map Total Capacity :: " + INITIAL_CAPACITIY
-				+ ", Map Current Capacity : " + capacity);
+				+ ", Map Current Capacity :: " + capacity);
 		chekLoadFactorAndRehash();
 
 		return existingVal;
@@ -101,6 +99,11 @@ public class CHashMap<K, V> implements CMap<K, V> {
 
 		V val = get(key);
 
+		if (null == val) {
+			System.out.println(" Key " + key + "not found");
+			return null;
+		}
+
 		if (null == key) {
 			node[hashVal] = null;
 			return val;
@@ -110,7 +113,12 @@ public class CHashMap<K, V> implements CMap<K, V> {
 				.findFirst().orElse(null);
 
 		node[hashVal].remove(temp);
-		capacity--;
+
+		if (node[hashVal].isEmpty()) {
+			node[hashVal] = null;
+			capacity--;
+
+		}
 
 		return val;
 	}
